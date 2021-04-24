@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      filterString:'',
+      pets: ['cat', 'dog', 'hamster', 'duck', 'badger']
+    };
+    
+    // this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(value){
+    this.setState({
+      filterString: value
+    })
+  }  
+
+
+  render() {
+ 
+    let petsToDisplay = this.state.pets
+    .filter((element, index) => {
+      return element.includes(this.state.filterString);
+    })
+    .map((element, index) => {
+      return <p key={index}>{element}</p>
+    });
+
+    return (
+      <div className="App">            
+        <input onChange={e => this.handleChange(e.target.value)} type='text'/>
+        {petsToDisplay}    
+      </div>
+    )
+  };
+
 }
 
+
 export default App;
+
+
